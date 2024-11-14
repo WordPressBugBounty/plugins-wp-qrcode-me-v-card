@@ -387,31 +387,64 @@ if ( ! empty( $wqm_photo ) ) {
             jQuery('#wqm_photo_path_delete').hide();
         });
 
-        jQuery('#wqm_photo_path_upload').click(function () {
-            var frame = new wp.media.view.MediaFrame.Select({
-                title: '<?php _e( 'Select photo', 'wp-qrcode-me-v-card' ) ?>',
-                multiple: false,
-                library: {
-                    order: 'ASC',
-                    orderby: 'title',
-                    type: 'image',
-                    search: null,
-                    uploadedTo: null,
-                },
-                button: {
-                    text: '<?php _e( 'Select photo', 'wp-qrcode-me-v-card' ) ?>',
-                },
-            });
+        jQuery('#wqm_photo_path_upload').click(function (e) {
+            e.preventDefault();
+
+            // Проверка наличия wp.media и версии
+            if (!wp || !wp.media || typeof wp.media.frame !== 'undefined') {
+                console.error('wp.media не найден либо находится в неподдерживаемой версии.');
+                return;
+            }
+
+            var mediaFrame;
+
+            // Используем старую или новую структуру MediaFrame
+            if (typeof wp.media.view.MediaFrame.Select !== 'undefined') {
+                mediaFrame = new wp.media.view.MediaFrame.Select({
+                    title: '<?php _e( 'Select photo', 'wp-qrcode-me-v-card' ) ?>',
+                    multiple: false,
+                    library: {
+                        order: 'ASC',
+                        orderby: 'title',
+                        type: 'image',
+                        search: null,
+                        uploadedTo: null,
+                    },
+                    button: {
+                        text: '<?php _e( 'Select photo', 'wp-qrcode-me-v-card' ) ?>',
+                    },
+                });
+            } else {
+                mediaFrame = wp.media({
+                    title: '<?php _e( 'Select photo', 'wp-qrcode-me-v-card' ) ?>',
+                    multiple: false,
+                    library: {
+                        type: 'image'
+                    },
+                    button: {
+                        text: '<?php _e( 'Select photo', 'wp-qrcode-me-v-card' ) ?>',
+                    },
+                });
+            }
+
             // Open the modal.
-            frame.open();
-            frame.on('select', function () {
-                var mediaFrameProps = frame.state().get('selection').first().toJSON();
-                jQuery('#field-photo').val(mediaFrameProps.id);
-                jQuery('#wqm-photosrc').prop('src', mediaFrameProps.url);
-                jQuery('#wqm_photo_path_upload').hide();
-                jQuery('#wqm_photo_path_delete').show();
-                return false;
+            mediaFrame.open();
+
+            mediaFrame.on('select', function () {
+                var mediaFrameProps;
+                if (typeof mediaFrame.state().get('selection').first().toJSON === 'function') {
+                    mediaFrameProps = mediaFrame.state().get('selection').first().toJSON();
+                } else {
+                    mediaFrameProps = mediaFrame.state().get('selection').first();
+                }
+
+                $('#field-photo').val(mediaFrameProps.id);
+                $('#wqm-photosrc').prop('src', mediaFrameProps.url);
+                $('#wqm_photo_path_upload').hide();
+                $('#wqm_photo_path_delete').show();
             });
+
+            return false;
         }); // End on click
 
         jQuery('#tel-wrapper select.wqm-tel').select2();

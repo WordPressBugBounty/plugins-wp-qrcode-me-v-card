@@ -105,7 +105,7 @@ if ( ! class_exists( 'WQM_Common' ) ) {
 		 */
 		public function wqm_register_admin_scripts() {
 			wp_enqueue_style( 'wqm-styles', $this->plugin_base_url . 'static/css/styles.css' );
-
+            wp_enqueue_media();
 			if ( ! wp_script_is( 'select2', 'registered' ) ) {
 				wp_enqueue_style( 'select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', false, '1.0', 'all' );
 				wp_enqueue_script( 'select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array( 'jquery' ), '1.0', true );

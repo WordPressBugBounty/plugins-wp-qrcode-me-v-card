@@ -152,30 +152,64 @@ if ( ! empty( $wqm_logo_id ) ) {
             jQuery('.warn-message').show();
         });
 
-        jQuery('#wqm_logo_path_upload').click(function () {
-            var frame = new wp.media.view.MediaFrame.Select({
-                title: '<?php _e( 'Select logo image', 'wp-qrcode-me-v-card' ) ?>',
-                multiple: false,
-                library: {
-                    order: 'ASC',
-                    orderby: 'title',
-                    type: 'image',
-                    search: null,
-                    uploadedTo: null
-                },
-                button: {
-                    text: '<?php _e( 'Select logo image', 'wp-qrcode-me-v-card' ) ?>'
-                }
-            });
+        jQuery('#wqm_logo_path_upload').click(function (e) {
+            e.preventDefault();
+
+            // Проверка наличия wp.media и версии
+            if (!wp || !wp.media || (typeof wp.media.view.MediaFrame === 'undefined' && typeof wp.media.frame === 'undefined')) {
+                console.error('wp.media не найден либо находится в неподдерживаемой версии.');
+                return;
+            }
+
+            var mediaFrame;
+
+            // Используем старую или новую структуру MediaFrame
+            if (typeof wp.media.view.MediaFrame.Select !== 'undefined') {
+                mediaFrame = new wp.media.view.MediaFrame.Select({
+                    title: '<?php _e( 'Select logo image', 'wp-qrcode-me-v-card' ); ?>',
+                    multiple: false,
+                    library: {
+                        order: 'ASC',
+                        orderby: 'title',
+                        type: 'image',
+                        search: null,
+                        uploadedTo: null
+                    },
+                    button: {
+                        text: '<?php _e( 'Select logo image', 'wp-qrcode-me-v-card' ); ?>'
+                    }
+                });
+            } else {
+                mediaFrame = wp.media({
+                    title: '<?php _e( 'Select logo image', 'wp-qrcode-me-v-card' ); ?>',
+                    multiple: false,
+                    library: {
+                        type: 'image'
+                    },
+                    button: {
+                        text: '<?php _e( 'Select logo image', 'wp-qrcode-me-v-card' ); ?>'
+                    }
+                });
+            }
+
             // Open the modal.
-            frame.open();
-            frame.on('select', function () {
-                var mediaFrameProps = frame.state().get('selection').first().toJSON();
+            mediaFrame.open();
+
+            mediaFrame.on('select', function () {
+                var mediaFrameProps;
+
+                if (typeof mediaFrame.state().get('selection').first().toJSON === 'function') {
+                    mediaFrameProps = mediaFrame.state().get('selection').first().toJSON();
+                } else {
+                    mediaFrameProps = mediaFrame.state().get('selection').first();
+                }
+
                 console.log(mediaFrameProps);
-                jQuery('#field-logo').val(mediaFrameProps.id);
-                jQuery('#wqm-picsrc').prop('src', mediaFrameProps.url);
-                jQuery('#wqm_logo_path_upload').hide();
-                jQuery('#wqm_logo_path_delete').show();
+                $('#field-logo').val(mediaFrameProps.id);
+                $('#wqm-picsrc').prop('src', mediaFrameProps.url);
+                $('#wqm_logo_path_upload').hide();
+                $('#wqm_logo_path_delete').show();
+
                 return false;
             });
         }); // End on click
