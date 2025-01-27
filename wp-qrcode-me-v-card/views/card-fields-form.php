@@ -438,10 +438,10 @@ if ( ! empty( $wqm_photo ) ) {
                     mediaFrameProps = mediaFrame.state().get('selection').first();
                 }
 
-                $('#field-photo').val(mediaFrameProps.id);
-                $('#wqm-photosrc').prop('src', mediaFrameProps.url);
-                $('#wqm_photo_path_upload').hide();
-                $('#wqm_photo_path_delete').show();
+                jQuery('#field-photo').val(mediaFrameProps.id);
+                jQuery('#wqm-photosrc').prop('src', mediaFrameProps.url);
+                jQuery('#wqm_photo_path_upload').hide();
+                jQuery('#wqm_photo_path_delete').show();
             });
 
             return false;
@@ -531,7 +531,8 @@ if ( ! empty( $wqm_photo ) ) {
             var n = [];
             jQuery('.wqm-n-part').each(function (i, e) {
                 var v = jQuery(e).val();
-                if (v.length) n.push(v);
+                if (!v.length) v = '';
+                n.push(v);
                 jQuery(e).val('');
             });
 
@@ -566,7 +567,8 @@ if ( ! empty( $wqm_photo ) ) {
                 n = [];
             jQuery('.adr-expand-' + id + ' .wqm-adr-part').each(function (i, e) {
                 var v = jQuery(e).val();
-                if (v.length) n.push(v);
+                if (!v.length) v = '';
+                n.push(v);
                 jQuery(e).val('');
             });
 

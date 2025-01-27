@@ -205,10 +205,10 @@ if ( ! empty( $wqm_logo_id ) ) {
                 }
 
                 console.log(mediaFrameProps);
-                $('#field-logo').val(mediaFrameProps.id);
-                $('#wqm-picsrc').prop('src', mediaFrameProps.url);
-                $('#wqm_logo_path_upload').hide();
-                $('#wqm_logo_path_delete').show();
+                jQuery('#field-logo').val(mediaFrameProps.id);
+                jQuery('#wqm-picsrc').prop('src', mediaFrameProps.url);
+                jQuery('#wqm_logo_path_upload').hide();
+                jQuery('#wqm_logo_path_delete').show();
 
                 return false;
             });

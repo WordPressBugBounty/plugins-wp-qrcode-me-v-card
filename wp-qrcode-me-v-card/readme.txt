@@ -5,7 +5,7 @@ Donate link: Ethereum 0x1b7722bd9899fD10D145D773F5373460E11f97A6
 Tags: mecard, vcard, qrcode, qr code, shortcode, widget
 Requires at least: 5.0
 Tested up to: 6.7.0
-Stable tag: 1.6.7
+Stable tag: 1.6.8
 Requires PHP: 7.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -159,5 +159,9 @@ Fix multi-version select2 usage issue
 = 1.6.6 - 2024-02-20 =
 Hotfix translate issue
 
-= 1.6.6 - 2024-02-20 =
+= 1.6.7 - 2024-02-20 =
 Just Fix for compatibility with WP 6.7
+
+= 1.6.8 - 2025-01-27 =
+Fix attach photo and logo
+Fix open expand name and address

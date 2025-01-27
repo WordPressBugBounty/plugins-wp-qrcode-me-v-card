@@ -398,7 +398,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 								$el = $el['s'];
 							} else {
 								unset( $el['s'] );
-								$el = implode( ';', array_filter( $el ) );
+								$el = implode( ';', $el);
 							}
 
 							return $el;
@@ -484,7 +484,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 							$value = $value['s'];
 						} else {
 							unset( $value['s'] );
-							$value = implode( ';', array_filter( $value ) );
+							$value = implode( ';', $value );
 						}
 					default:
 						$def             = filter_var( $value, FILTER_SANITIZE_STRING );
@@ -498,7 +498,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 
 		/**
 		 * Ajax request to make QR code imag url permanent for direct link
-		 */
+		 */ // todo: сохранять рядом vcf и переделать колонку чтобы было пермалинки на qr на vcf и на qr_на_vcf
 		public static function wqm_make_url_permanent() {
 			if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'wqm-permalink-nonce' ) ) {
 				wp_send_json_error( 'security check' );
