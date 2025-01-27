@@ -35,6 +35,11 @@ if ( ! class_exists( 'WQM_Shortcode' ) ) {
 
 			$qr_code = get_the_post_thumbnail_url( $card_id, 'full' );
 
+			if ( in_array( 'vcfcode', $attributes ) ) {
+				$attId   = get_post_meta( $card_id, 'wqm_vcf_qrcode_att_id', true );
+				$qr_code = wp_get_attachment_image_url( $attId, 'full' );
+			}
+
 			return apply_filters( self::SHORTCODE_NAME . '-render', WQM_Common::render( 'shortcode.php', array(
 				'card_id' => $card_id,
 				'qr_code' => $qr_code

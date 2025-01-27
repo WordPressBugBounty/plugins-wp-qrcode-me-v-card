@@ -2,10 +2,10 @@
 Contributors: stasionok, kubalskiy
 Telegram: https://t.me/stasionok
 Donate link: Ethereum 0x1b7722bd9899fD10D145D773F5373460E11f97A6
-Tags: mecard, vcard, qrcode, qr code, shortcode, widget
+Tags: mecard, vcard, qrcode, shortcode, widget
 Requires at least: 5.0
 Tested up to: 6.7.0
-Stable tag: 1.6.8
+Stable tag: 1.7.0
 Requires PHP: 7.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -165,3 +165,6 @@ Just Fix for compatibility with WP 6.7
 = 1.6.8 - 2025-01-27 =
 Fix attach photo and logo
 Fix open expand name and address
+
+= 1.7.0 - 2025-01-28 =
+Add qrcode for .vcf file

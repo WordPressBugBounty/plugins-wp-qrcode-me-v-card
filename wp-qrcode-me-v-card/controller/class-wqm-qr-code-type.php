@@ -72,9 +72,9 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 					$columns = array(
 						'cb'             => '<input type="checkbox" />',
 						'title'          => __( 'Title', 'wp-qrcode-me-v-card' ),
-						'featured_image' => __( 'QR code', 'wp-qrcode-me-v-card' ),
-						'shortcode'      => __( 'Shortcode', 'wp-qrcode-me-v-card' ),
-						'url'            => __( 'Direct url', 'wp-qrcode-me-v-card' ),
+						'featured_image' => __( 'QR code [with shortcode]', 'wp-qrcode-me-v-card' ),
+						'vcf-qr-code'    => __( 'VCF-QR code [with shortcode]', 'wp-qrcode-me-v-card' ),
+						'url'            => __( 'Links', 'wp-qrcode-me-v-card' ),
 						'date'           => __( 'Date', 'wp-qrcode-me-v-card' ),
 					);
 
@@ -82,32 +82,58 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 				} );
 
 				add_action( 'manage_' . self::POST_TYPE_SLUG . '_posts_custom_column', function ( $column, $post_id ) {
+					$attId = get_post_meta( $post_id, 'wqm_vcf_qrcode_att_id', true );
+
 					switch ( $column ) {
 						case 'featured_image':
+							echo '<strong>[' . WQM_Shortcode::SHORTCODE_NAME . ' card_id="' . $post_id . '"]</strong>';
 							echo get_the_post_thumbnail( $post_id, 'full' );
 							break;
-						case 'shortcode':
-							echo '[' . WQM_Shortcode::SHORTCODE_NAME . ' card_id="' . $post_id . '"]';
+						case 'vcf-qr-code':
+							echo '<strong>[' . WQM_Shortcode::SHORTCODE_NAME . ' card_id="' . $post_id . '" vcfcode]</strong>';
+							echo wp_get_attachment_image( $attId, 'full' );
 							break;
 						case 'url':
-							$is_static = get_post_meta( $post_id, 'wqm_is_static', true );
-							if ( $is_static ) {
-								$imurl = get_the_post_thumbnail_url( $post_id, 'full' );
-								echo '<div class="dirlink">Permanent url: <a href="' . $imurl . '">' . $imurl . '</a></div>';
-							} else {
-								$nonce = wp_create_nonce( 'wqm-permalink-nonce' );
-								$url   = admin_url( 'admin-ajax.php' ) . '?action=wqm_make_permanent&post_id=' . $post_id . '&_wpnonce=' . $nonce;
-								echo '<div class="dirlink"><a href="javascript:;" onclick="_this=this;jQuery.get(\'' . $url . '\', function(r) {
+							echo '<strong>1. Permanent url</strong>';
+							echo '<ul class="qr-permalink">';
+							$nonce          = wp_create_nonce( 'wqm-permalink-nonce' );
+							$qrcode_url     = get_the_post_thumbnail_url( $post_id, 'full' );
+							$vcf_qrcode_url = wp_get_attachment_image_url( @$attId, 'full' );
+
+							// qr code permalink
+							$is_static_qrcode = get_post_meta( $post_id, 'wqm_is_static_qrcode', true );
+							$permaQrCode      = admin_url( 'admin-ajax.php' ) . '?action=wqm_make_permanent&post_id=' . $post_id . '&type=qrcode&_wpnonce=' . $nonce;
+							echo '<li>- ' . __( 'qrcode', 'wp-qrcode-me-v-card' ) . ': ' . ( $is_static_qrcode
+									? '<a target="_blank" href="' . $qrcode_url . '">' . $qrcode_url . '</a>'
+									: '<a href="javascript:;" onclick="_this=this;jQuery.get(\'' . $permaQrCode . '\', function(r) {
 											if (r.success === false || (r.success === true && r.data === false)) {
 												jQuery(_this).parent().html(\'Error: \' + r.data + \'<br>\' + jQuery(_this).parent().html());
 												return;
 											}
 											jQuery(_this).parent().html(r.data);
-										})">' .
-								     __( 'Create permanent url', 'wp-qrcode-me-v-card' ) .
-								     '</a></div>';
-							}
-							echo '<br><br><a href="/?qr-code=' . $post_id . '">' . __( 'Direct .VCF Link', 'wp-qrcode-me-v-card' ) . '</a>';
+										})">' . '(' . __( 'create', 'wp-qrcode-me-v-card' ) . ')' . '</a><li>' );
+
+							$is_static_vcfqrcode = get_post_meta( $post_id, 'wqm_is_static_vcfqrcode', true );
+							$permaVcfQrCode      = admin_url( 'admin-ajax.php' ) . '?action=wqm_make_permanent&post_id=' . $post_id . '&type=vcfqrcode&_wpnonce=' . $nonce;
+							echo '<li>- ' . __( 'vcf qrcode', 'wp-qrcode-me-v-card' ) . ': ' . ( $is_static_vcfqrcode
+									? '<a target="_blank" href="' . $vcf_qrcode_url . '">' . $vcf_qrcode_url . '</a>'
+									: '<a href="javascript:;" onclick="_this=this;jQuery.get(\'' . $permaVcfQrCode . '\', function(r) {
+											if (r.success === false || (r.success === true && r.data === false)) {
+												jQuery(_this).parent().html(\'Error: \' + r.data + \'<br>\' + jQuery(_this).parent().html());
+												return;
+											}
+											jQuery(_this).parent().html(r.data);
+										})">' . '(' . __( 'create', 'wp-qrcode-me-v-card' ) . ')' . '</a><li>' );
+
+							echo '</ul>';
+
+							echo '<strong>2. Direct url</strong>';
+							echo '<ul class="qr-directlink">';
+							echo '<li>-  <a target="_blank" href="' . $qrcode_url . '">' . __( 'qrcode', 'wp-qrcode-me-v-card' ) . '</a>';
+							echo '<li>- <a target="_blank" href="/?qr-code=' . $post_id . '">' . __( '.vcf file', 'wp-qrcode-me-v-card' ) . '</a>';
+							echo '<li>-  <a target="_blank" href="' . $vcf_qrcode_url . '">' . __( 'vcf qrcode', 'wp-qrcode-me-v-card' ) . '</a>';
+							echo '</ul>';
+
 							break;
 					}
 				}, 10, 2 );
@@ -320,14 +346,17 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 
 			$atid = get_post_thumbnail_id( $post_id );
 
-			$is_static = get_post_meta( $post_id, 'wqm_is_static', true );
-			if ( $is_static ) {
+			$is_static_qrcode     = get_post_meta( $post_id, 'wqm_is_static_qrcode', true );
+			$atid_vcf_qrcode      = get_post_meta( $post_id, 'wqm_vcf_qrcode_att_id', true ); // attarchmen id here
+			$is_static_vcf_qrcode = get_post_meta( $post_id, 'wqm_is_static_vcfqrcode', true ); // vcf qrcode static image url here
+
+			if ( $is_static_qrcode ) {
 				$att_meta = wp_get_attachment_metadata( $atid );
 				if ( empty( $att_meta ) ) {
-					$is_static = false;
+					$is_static_qrcode = false;
 				} else {
-					$upload    = wp_get_upload_dir();
-					$is_static = $upload['basedir'] . '/' . $att_meta['file'];
+					$upload           = wp_get_upload_dir();
+					$is_static_qrcode = $upload['basedir'] . '/' . $att_meta['file'];
 				}
 			}
 
@@ -335,11 +364,15 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 			$params = array_merge(
 				self::get_card_metas( $post_id ),
 				self::get_qr_code_settings_metas( $post_id ),
-				array( 'wqm_is_static' => $is_static )
+				array(
+					'wqm_is_static_qrcode'    => $is_static_qrcode,
+					'wqm_is_static_vcfqrcode' => $is_static_vcf_qrcode,
+					'post_id'                 => $post_id
+				)
 			);
 			$file   = ( new WQM_Qr_Code_Generator( $params ) )->build();
 			if ( $file ) {
-				if ( ! $is_static ) {
+				if ( ! $is_static_qrcode ) {
 					// remove exists
 					if ( ! empty( $atid ) ) {
 						wp_delete_attachment( $atid, true );
@@ -349,6 +382,22 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 					update_post_meta( $post_id, '_thumbnail_id', $media_id );
 				} else {
 					wp_create_image_subsizes( $file, $atid );
+				}
+			}
+
+
+			$vcf_qr_path = ( new WQM_Qr_Code_Generator( $params ) )->buildVcfQr();
+			if ( $vcf_qr_path ) {
+				if ( ! $is_static_vcf_qrcode ) {
+					// remove exists
+					if ( ! empty( $atid_vcf_qrcode ) ) {
+						wp_delete_attachment( $atid, true );
+					}
+					// save new QR code
+					$media_id = self::upload_media( $vcf_qr_path, $post_id, null );
+					update_post_meta( $post_id, 'wqm_vcf_qrcode_att_id', $media_id );
+				} else {
+					wp_create_image_subsizes( $vcf_qr_path, $atid );
 				}
 			}
 		}
@@ -398,7 +447,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 								$el = $el['s'];
 							} else {
 								unset( $el['s'] );
-								$el = implode( ';', $el);
+								$el = implode( ';', $el );
 							}
 
 							return $el;
@@ -487,7 +536,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 							$value = implode( ';', $value );
 						}
 					default:
-						$def             = filter_var( $value, FILTER_SANITIZE_STRING );
+						$def             = htmlspecialchars( $value );
 						$result[ $item ] = sanitize_text_field( $def );
 						break;
 				}
@@ -498,7 +547,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 
 		/**
 		 * Ajax request to make QR code imag url permanent for direct link
-		 */ // todo: сохранять рядом vcf и переделать колонку чтобы было пермалинки на qr на vcf и на qr_на_vcf
+		 */
 		public static function wqm_make_url_permanent() {
 			if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'wqm-permalink-nonce' ) ) {
 				wp_send_json_error( 'security check' );
@@ -517,9 +566,27 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 				wp_send_json_error( 'post not found' );
 			}
 
-			update_post_meta( $post_id, 'wqm_is_static', true );
-			$url = get_the_post_thumbnail_url( $post_id, 'full' );
-			wp_send_json_success( 'Permanent url: <a href="' . $url . '" target="_blank">' . $url . '</a>' );
+			$type = $_REQUEST['type'];
+			if ( ! in_array( $type, [ 'qrcode', 'vcfqrcode' ] ) ) {
+				wp_send_json_error( 'invalid type' );
+			}
+
+			switch ( $type ) {
+				case 'qrcode':
+					update_post_meta( $post_id, 'wqm_is_static_qrcode', true );
+					$url = get_the_post_thumbnail_url( $post_id, 'full' );
+					wp_send_json_success( '- qrcode: <a href="' . $url . '" target="_blank">' . $url . '</a>' );
+					break;
+				case 'vcfqrcode':
+					$att_id = get_post_meta( $post_id, 'wqm_vcf_qrcode_att_id', true );
+					$url    = wp_get_attachment_image_url( $att_id, 'full' );
+					update_post_meta( $post_id, 'wqm_is_static_vcfqrcode', $url );
+					wp_send_json_success( '- vcf qrcode: <a href="' . $url . '" target="_blank">' . $url . '</a>' );
+					break;
+				default:
+					wp_send_json_success( '' );
+					break;
+			}
 		}
 	}
 }

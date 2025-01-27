@@ -200,3 +200,33 @@ span.description {
     cursor: pointer;
     font-weight: bold;
 }
+
+.post-type-qrcode-card th#vcf-qr-code,
+.post-type-qrcode-card th#featured_image {
+    text-align: center;
+}
+
+.post-type-qrcode-card .vcf-qr-code,
+.post-type-qrcode-card .featured_image {
+    text-align: center;
+}
+
+.post-type-qrcode-card .column-featured_image,
+.post-type-qrcode-card .column-vcf-qr-code {
+    text-align: center;
+}
+
+.post-type-qrcode-card .column-featured_image strong,
+.post-type-qrcode-card .column-vcf-qr-code strong {
+    line-height: 2em;
+}
+
+.qr-directlink,
+.qr-permalink {
+    margin-block-start: 0.5em;
+}
+
+.qr-directlink li,
+.qr-permalink li {
+    margin-left: 1em;
+}
