@@ -50,6 +50,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 			'wqm_bgcolor',
 			'wqm_fgcolor',
 			'wqm_filename',
+			'wqm_size',
 		);
 
 		/**
@@ -86,12 +87,12 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 
 					switch ( $column ) {
 						case 'featured_image':
-							echo '<strong>[' . WQM_Shortcode::SHORTCODE_NAME . ' card_id="' . $post_id . '"]</strong>';
-							echo get_the_post_thumbnail( $post_id, 'full' );
+							echo '<strong>[' . WQM_Shortcode::SHORTCODE_NAME . ' card_id="' . $post_id . '"]</strong><br/>';
+							echo get_the_post_thumbnail( $post_id, array( 80, 80 ) );
 							break;
 						case 'vcf-qr-code':
-							echo '<strong>[' . WQM_Shortcode::SHORTCODE_NAME . ' card_id="' . $post_id . '" vcfcode]</strong>';
-							echo wp_get_attachment_image( $attId, 'full' );
+							echo '<strong>[' . WQM_Shortcode::SHORTCODE_NAME . ' card_id="' . $post_id . '" vcfcode]</strong><br/>';
+							echo wp_get_attachment_image( $attId, array( 80, 80 ) );
 							break;
 						case 'url':
 							echo '<strong>1. Permanent url</strong>';
@@ -254,6 +255,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 		public static function markup_meta_box_settings( $post ) {
 
 			$variables = self::get_qr_code_settings_metas( $post->ID );
+			$variables = array_merge( $variables, array( 'post_id' => $post->ID ) );
 
 			echo WQM_Common::render( 'settings-form.php', $variables );
 		}
@@ -527,6 +529,16 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 						if ( in_array( $value, array( 'LOW', 'MEDIUM', 'QUARTILE', 'HIGH' ) ) ) {
 							$result[ $item ] = $value;
 						}
+						break;
+					case 'wqm_size':
+						$size = WQM_Common::clear_digits( $value );
+						if ( $size < 100 ) {
+							$size = 100;
+						}
+						if ( $size > 4096 ) {
+							$size = 4096;
+						}
+						$result[ $item ] = $size;
 						break;
 					case 'wqm_n':
 						if ( ! empty( $value['s'] ) ) {

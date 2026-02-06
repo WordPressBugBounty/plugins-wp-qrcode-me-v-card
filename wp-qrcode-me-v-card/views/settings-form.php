@@ -11,9 +11,13 @@ defined( 'ABSPATH' ) || exit;
 /* @var $wqm_bgcolor array */
 /* @var $wqm_fgcolor array */
 /* @var $wqm_filename string */
+/* @var $wqm_size string */
 
 if ( empty( $wqm_margin ) ) {
 	$wqm_margin = 10;
+}
+if ( empty( $wqm_size ) ) {
+	$wqm_size = 400;
 }
 
 $wqm_logo_path_url = '';
@@ -43,6 +47,30 @@ if ( ! empty( $wqm_logo_id ) ) {
             <input type="text" name="wqm_margin" id="field-margin" class="regular-text" placeholder="10"
                    value="<?php echo WQM_Common::clear_digits( esc_attr( $wqm_margin ) ); ?>">
             <span class="description"><?php _e( 'Specify border size around QR code in px', 'wp-qrcode-me-v-card' ) ?></span>
+        </td>
+    </tr>
+    <tr class="field-size">
+        <th><label for="field-size"><?php _e( 'QR size', 'wp-qrcode-me-v-card' ) ?></label></th>
+        <td>
+            <?php
+            // Default presets (px)
+            $default_presets = array(400, 600, 800, 1000, 1200, 1600, 2000);
+            // Allow 3rd-parties to modify or extend presets. Provide context via $post_id.
+            $size_presets = apply_filters('wqm_qr_size_presets', $default_presets, $post_id ?? 0 );
+            if (!is_array($size_presets) || empty($size_presets)) {
+                $size_presets = $default_presets;
+            }
+            ?>
+            <select name="wqm_size" id="field-size">
+                <?php foreach ($size_presets as $preset):
+                    $val = intval($preset);
+                    if ($val < 100) { $val = 100; }
+                    if ($val > 4096) { $val = 4096; }
+                    ?>
+                    <option value="<?php echo esc_attr($val); ?>" <?php selected(intval($wqm_size), $val); ?>><?php echo esc_html($val . ' × ' . $val . ' px'); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <span class="description"><?php _e( 'Pick final image size (width = height). Use filter wqm_qr_size_presets to add custom sizes.', 'wp-qrcode-me-v-card' ) ?></span>
         </td>
     </tr>
     <tr class="field-correction-level">

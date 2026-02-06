@@ -4,8 +4,8 @@ Telegram: https://t.me/stasionok
 Donate link: Ethereum 0x1b7722bd9899fD10D145D773F5373460E11f97A6
 Tags: mecard, vcard, qrcode, shortcode, widget
 Requires at least: 5.0
-Tested up to: 6.7.0
-Stable tag: 1.7.0
+Tested up to: 6.8.3
+Stable tag: 1.7.1
 Requires PHP: 7.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -31,6 +31,15 @@ This section describes how to install the plugin and get it working.
 3. Use plugin`s created post type to create and manage QR code card.
 
 == Frequently Asked Questions ==
+
+= How to add custom qr-code image size = =
+
+You can use hook in your theme functions.php file. Example
+```add_filter('wqm_qr_size_presets', function(array $presets, int $post_id = 0) {
+    $presets[] = 300;
+    sort($presets);
+    return $presets;
+}, 10, 2);```
 
 = Why I can`t read QR code sometimes =
 
@@ -168,3 +177,6 @@ Fix open expand name and address
 
 = 1.7.0 - 2025-01-28 =
 Add qrcode for .vcf file
+
+= 1.7.1 - 2025-01-28 =
+Add qrcode size selector with hook for custom sizes
