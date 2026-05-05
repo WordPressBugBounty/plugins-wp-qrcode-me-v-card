@@ -41,6 +41,7 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 		 */
 		public static $qr_code_settings_fields = array(
 			'wqm_type',
+			'wqm_visual_style',
 			'wqm_margin',
 			'wqm_correction_level',
 			'wqm_label',
@@ -52,6 +53,55 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 			'wqm_filename',
 			'wqm_size',
 		);
+
+		/**
+		 * QR bitmap visual variants (PNG module drawing · Endroid+Bacon unchanged for data).
+		 *
+		 * @return array<string, array{ slug: string, label: string, preview: string }>
+		 */
+		public static function get_visual_style_options(): array {
+			/*
+			 * plugins_url(, __FILE__) в подпапке (controller/) даёт URL с лишним сегментом /controller/.
+			 * Якорь — главный файл плагина у корня, тогда ресурсы — …/wp-qrcode-me-v-card/static/…
+			 */
+			$wqm_plugin_main = dirname( dirname( __FILE__ ) ) . '/bootstrap.php';
+			$preview_base_url = plugin_dir_url( $wqm_plugin_main ) . 'static/images/qr-style-previews/';
+			return apply_filters(
+				'wqm_visual_style_options',
+				array(
+					'square'  => array(
+						'slug'    => 'square',
+						'label'   => __( 'Classic squares', 'wp-qrcode-me-v-card' ),
+						'preview' => $preview_base_url . 'square.png',
+					),
+					'dots'    => array(
+						'slug'    => 'dots',
+						'label'   => __( 'Dots', 'wp-qrcode-me-v-card' ),
+						'preview' => $preview_base_url . 'dots.png',
+					),
+					'rounded' => array(
+						'slug'    => 'rounded',
+						'label'   => __( 'Rounded squares', 'wp-qrcode-me-v-card' ),
+						'preview' => $preview_base_url . 'rounded.png',
+					),
+					'diamond' => array(
+						'slug'    => 'diamond',
+						'label'   => __( 'Diamond', 'wp-qrcode-me-v-card' ),
+						'preview' => $preview_base_url . 'diamond.png',
+					),
+					'slanted' => array(
+						'slug'    => 'slanted',
+						'label'   => __( 'Tilted squares', 'wp-qrcode-me-v-card' ),
+						'preview' => $preview_base_url . 'slanted.png',
+					),
+					'liquid'  => array(
+						'slug'    => 'liquid',
+						'label'   => __( 'Bubble / fused cells', 'wp-qrcode-me-v-card' ),
+						'preview' => $preview_base_url . 'liquid.png',
+					),
+				)
+			);
+		}
 
 		/**
 		 * Initialization post type
@@ -524,6 +574,11 @@ if ( ! class_exists( 'WQM_QR_Code_Type' ) ) {
 					case 'wqm_margin':
 						$margin          = preg_replace( '@[^\d]+@si', '', $value );
 						$result[ $item ] = $margin;
+						break;
+					case 'wqm_visual_style':
+						$allowed_styles = array_keys( WQM_QR_Code_Type::get_visual_style_options() );
+						$sty            = sanitize_key( $value );
+						$result[ $item ] = in_array( $sty, $allowed_styles, true ) ? $sty : 'square';
 						break;
 					case 'wqm_correction_level':
 						if ( in_array( $value, array( 'LOW', 'MEDIUM', 'QUARTILE', 'HIGH' ) ) ) {

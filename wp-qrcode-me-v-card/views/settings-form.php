@@ -2,6 +2,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /* @var $wqm_type string */
+/* @var $wqm_visual_style string */
 /* @var $wqm_margin string */
 /* @var $wqm_correction_level string */
 /* @var $wqm_label string */
@@ -41,6 +42,28 @@ if ( ! empty( $wqm_logo_id ) ) {
             <span class="description"><?php _e( 'MeCard has encoding issues and support less fields', 'wp-qrcode-me-v-card' ) ?></span>
         </td>
     </tr>
+    <tr class="field-qr-visual-style">
+        <th><label for="field-qr-visual-style"><?php _e( 'QR appearance', 'wp-qrcode-me-v-card' ) ?></label></th>
+        <td>
+			<?php
+			$wqm_visual_current = isset( $wqm_visual_style ) ? sanitize_key( strval( $wqm_visual_style ) ) : 'square';
+			if ( '' === $wqm_visual_current || ! array_key_exists( $wqm_visual_current, WQM_QR_Code_Type::get_visual_style_options() ) ) {
+				$wqm_visual_current = 'square';
+			}
+			?>
+            <div class="wqm-qr-visual-select-wrap">
+            <select name="wqm_visual_style" id="field-qr-visual-style" class="wqm-visual-style-select">
+				<?php foreach ( WQM_QR_Code_Type::get_visual_style_options() as $slug => $def ) : ?>
+                    <option
+						value="<?php echo esc_attr( $slug ); ?>"
+						<?php echo selected( $wqm_visual_current, $slug, false ); ?>
+						data-preview-url="<?php echo esc_url( $def['preview'] ); ?>"><?php echo esc_html( $def['label'] ); ?></option>
+				<?php endforeach; ?>
+            </select>
+            </div>
+            <span class="description"><?php _e( 'How dark modules are drawn (PNG export). Decorative styles need a high error correction level and testing with real scanners.', 'wp-qrcode-me-v-card' ) ?></span>
+        </td>
+    </tr>
     <tr class="field-margin">
         <th><label for="field-margin"><?php _e( 'Margin', 'wp-qrcode-me-v-card' ) ?></label></th>
         <td>
@@ -70,7 +93,7 @@ if ( ! empty( $wqm_logo_id ) ) {
                     <option value="<?php echo esc_attr($val); ?>" <?php selected(intval($wqm_size), $val); ?>><?php echo esc_html($val . ' × ' . $val . ' px'); ?></option>
                 <?php endforeach; ?>
             </select>
-            <span class="description"><?php _e( 'Pick final image size (width = height). Use filter wqm_qr_size_presets to add custom sizes.', 'wp-qrcode-me-v-card' ) ?></span>
+            <span class="description"><?php _e( 'Choose how large the QR image should be — it is always square (width equals height). Size is set in pixels.', 'wp-qrcode-me-v-card' ) ?></span>
         </td>
     </tr>
     <tr class="field-correction-level">
@@ -241,6 +264,45 @@ if ( ! empty( $wqm_logo_id ) ) {
                 return false;
             });
         }); // End on click
+
+        /** Список: чуть крупнее превью + подпись */
+        function wqmQrVisualDropdown(state) {
+            if (!state.id) {
+                return state.text;
+            }
+            var $opt = jQuery(state.element),
+                url = $opt.attr('data-preview-url'),
+                $row = jQuery('<span class="wqm-qr-visual-opt wqm-qr-visual-opt--dropdown"></span>');
+            if (url) {
+                $row.append(jQuery('<img>', { src: url, alt: '', width: 40, height: 40, loading: 'lazy' }));
+            }
+            $row.append(jQuery('<span class="wqm-qr-visual-label"></span>').text(state.text));
+            return $row;
+        }
+
+        /** Свёрнутый селект: маленое превью + обрезанный текст, фикс. высота под стрелку */
+        function wqmQrVisualSelected(state) {
+            if (!state.id) {
+                return state.text;
+            }
+            var $opt = jQuery(state.element),
+                url = $opt.attr('data-preview-url'),
+                $row = jQuery('<span class="wqm-qr-visual-opt wqm-qr-visual-opt--selection"></span>').attr('title', state.text);
+            if (url) {
+                $row.append(jQuery('<img>', { src: url, alt: '', width: 32, height: 32, loading: 'lazy' }));
+            }
+            $row.append(jQuery('<span class="wqm-qr-visual-label"></span>').text(state.text));
+            return $row;
+        }
+
+        if (typeof jQuery.fn.select2 === 'function') {
+            jQuery('#field-qr-visual-style').select2({
+                width: '100%',
+                templateResult: wqmQrVisualDropdown,
+                templateSelection: wqmQrVisualSelected,
+                minimumResultsForSearch: Infinity
+            });
+        }
 
         jQuery('.field-filename .patrn').click(function () {
             const element = jQuery('#field-filename');

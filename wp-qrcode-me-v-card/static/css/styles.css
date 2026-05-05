@@ -230,3 +230,109 @@ span.description {
 .qr-permalink li {
     margin-left: 1em;
 }
+
+/* QR appearance: компактное поле, превью внутри, стрелка Select2 видна */
+.wqm-qr-visual-select-wrap {
+    max-width: 16rem;
+}
+
+.field-qr-visual-style .wqm-visual-style-select:not(.select2-hidden-accessible) {
+    max-width: 100%;
+}
+
+.field-qr-visual-style .select2-container {
+    vertical-align: middle;
+}
+
+.field-qr-visual-style .select2-container--default .select2-selection--single {
+    height: 44px !important;
+    min-height: 44px !important;
+    box-sizing: border-box;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.field-qr-visual-style .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: normal !important;
+    padding-left: 8px !important;
+    padding-right: 2.25rem !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.field-qr-visual-style .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 42px;
+    top: 0;
+    right: 5px;
+    width: 1.75rem;
+}
+
+.field-qr-visual-style .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #50575e transparent transparent transparent;
+    border-width: 5px 4px 0 4px;
+    margin-left: -4px;
+    margin-top: -2px;
+}
+
+.wqm-qr-visual-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.wqm-qr-visual-opt--selection {
+    width: 100%;
+    overflow: hidden;
+}
+
+.wqm-qr-visual-opt--selection img {
+    width: 32px !important;
+    height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    box-sizing: border-box;
+    object-fit: contain;
+    flex-shrink: 0;
+    border: 1px solid #dcdcde;
+    border-radius: 3px;
+    background: #fff;
+    vertical-align: middle;
+}
+
+.wqm-qr-visual-opt--selection .wqm-qr-visual-label {
+    flex: 1 1 auto;
+    font-size: 13px;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.wqm-qr-visual-opt--dropdown img {
+    width: 40px !important;
+    height: 40px !important;
+    flex-shrink: 0;
+    object-fit: contain;
+    border: 1px solid #dcdcde;
+    border-radius: 3px;
+    background: #fff;
+    vertical-align: middle;
+}
+
+.wqm-qr-visual-opt--dropdown .wqm-qr-visual-label {
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+.select2-container--default .select2-results__option .wqm-qr-visual-opt--dropdown {
+    padding: 2px 0;
+}

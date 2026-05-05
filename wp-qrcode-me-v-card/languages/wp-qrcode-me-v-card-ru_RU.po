@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: QR code MeCard/vCard generator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-16 11:29+0300\n"
-"PO-Revision-Date: 2023-11-16 11:31+0300\n"
+"POT-Creation-Date: 2026-05-05 12:12+0300\n"
+"PO-Revision-Date: 2026-05-05 12:13+0300\n"
 "Last-Translator: root <stasionoks@yandex.ru>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -36,8 +36,8 @@ msgid ""
 "Your server is running PHP version %s but this plugin requires at least PHP "
 "%s. Please run an upgrade."
 msgstr ""
-"Ваш сервер работает на PHP версии %s, но для этого плагина необходимо минимум "
-"PHP версии %s. Пожалуйста обновите PHP."
+"Ваш сервер работает на PHP версии %s, но для этого плагина необходимо "
+"минимум PHP версии %s. Пожалуйста обновите PHP."
 
 #: bootstrap.php:45
 #, php-format
@@ -48,94 +48,129 @@ msgstr ""
 "Ваш Wordpress работает на версии %s, но этому плагину требуется как минимум "
 "версия %s. Пожалуйста обновитесь."
 
-#: controller/class-wqm-qr-code-type.php:74 views/card-fields-form.php:313
+#: controller/class-wqm-qr-code-type.php:74
+msgid "Classic squares"
+msgstr "Классический квадрат"
+
+#: controller/class-wqm-qr-code-type.php:79
+msgid "Dots"
+msgstr "Точки"
+
+#: controller/class-wqm-qr-code-type.php:84
+msgid "Rounded squares"
+msgstr "Скругленные квадараты"
+
+#: controller/class-wqm-qr-code-type.php:89
+msgid "Diamond"
+msgstr "Алмазы"
+
+#: controller/class-wqm-qr-code-type.php:94
+msgid "Tilted squares"
+msgstr "Наклонные квадраты"
+
+#: controller/class-wqm-qr-code-type.php:99
+msgid "Bubble / fused cells"
+msgstr "Пузырьковые / слитые ячейки"
+
+#: controller/class-wqm-qr-code-type.php:125 views/card-fields-form.php:313
 #: views/widget-config.php:14
 msgid "Title"
 msgstr "Название"
 
-#: controller/class-wqm-qr-code-type.php:75
-msgid "QR code"
-msgstr "QR код"
+#: controller/class-wqm-qr-code-type.php:126
+msgid "QR code [with shortcode]"
+msgstr "QR code [с шоткодом]"
 
-#: controller/class-wqm-qr-code-type.php:76
-msgid "Shortcode"
-msgstr "Шоткод"
+#: controller/class-wqm-qr-code-type.php:127
+msgid "VCF-QR code [with shortcode]"
+msgstr "VCF-QR code [с шоткодом]"
 
-#: controller/class-wqm-qr-code-type.php:77
-msgid "Direct url"
-msgstr "Прямая ссылка"
+#: controller/class-wqm-qr-code-type.php:128
+msgid "Links"
+msgstr "Ссылки"
 
-#: controller/class-wqm-qr-code-type.php:78
+#: controller/class-wqm-qr-code-type.php:129
 msgid "Date"
 msgstr "Дата"
 
-#: controller/class-wqm-qr-code-type.php:107
-msgid "Create permanent url"
-msgstr "Создать постоянную ссылку"
+#: controller/class-wqm-qr-code-type.php:157
+#: controller/class-wqm-qr-code-type.php:183
+msgid "qrcode"
+msgstr "qrcode"
 
-#: controller/class-wqm-qr-code-type.php:110
-msgid "Direct .VCF Link"
-msgstr "Прямая ссылка на .VCF файл"
+#: controller/class-wqm-qr-code-type.php:165
+#: controller/class-wqm-qr-code-type.php:177
+msgid "create"
+msgstr "создать"
 
-#: controller/class-wqm-qr-code-type.php:149
+#: controller/class-wqm-qr-code-type.php:169
+#: controller/class-wqm-qr-code-type.php:185
+msgid "vcf qrcode"
+msgstr "vcf qrcode"
+
+#: controller/class-wqm-qr-code-type.php:184
+msgid ".vcf file"
+msgstr ".vcf файл"
+
+#: controller/class-wqm-qr-code-type.php:226
 msgid "MeCard/vCard QR codes"
 msgstr "MeCard/vCard QR коды"
 
-#: controller/class-wqm-qr-code-type.php:150
+#: controller/class-wqm-qr-code-type.php:227
 msgid "All QR codes"
 msgstr "Все QR коды"
 
-#: controller/class-wqm-qr-code-type.php:151
-#: controller/class-wqm-qr-code-type.php:167
+#: controller/class-wqm-qr-code-type.php:228
+#: controller/class-wqm-qr-code-type.php:244
 msgid "QR code MeCard/vCard card"
 msgstr "QR code MeCard/vCard card"
 
-#: controller/class-wqm-qr-code-type.php:152
+#: controller/class-wqm-qr-code-type.php:229
 msgid "Add New"
 msgstr "Добавить новый"
 
-#: controller/class-wqm-qr-code-type.php:153
+#: controller/class-wqm-qr-code-type.php:230
 msgid "Add New MeCard/vCard card"
 msgstr "Добавить новую MeCard/vCard карту"
 
-#: controller/class-wqm-qr-code-type.php:154
+#: controller/class-wqm-qr-code-type.php:231
 msgid "Edit"
 msgstr "Редкатировать"
 
-#: controller/class-wqm-qr-code-type.php:155
+#: controller/class-wqm-qr-code-type.php:232
 msgid "Edit MeCard/vCard card"
 msgstr "Редактировать MeCard/vCard карту"
 
-#: controller/class-wqm-qr-code-type.php:156
+#: controller/class-wqm-qr-code-type.php:233
 msgid "New MeCard/vCard card"
 msgstr "Новая  MeCard/vCard карта"
 
-#: controller/class-wqm-qr-code-type.php:157
-#: controller/class-wqm-qr-code-type.php:158
+#: controller/class-wqm-qr-code-type.php:234
+#: controller/class-wqm-qr-code-type.php:235
 msgid "View MeCard/vCard card"
 msgstr "Просмотреть  MeCard/vCard карту"
 
-#: controller/class-wqm-qr-code-type.php:159
+#: controller/class-wqm-qr-code-type.php:236
 msgid "Search QR code MeCard/vCard cards"
 msgstr "Искать в  QR кодах MeCard/vCard карты"
 
-#: controller/class-wqm-qr-code-type.php:160
+#: controller/class-wqm-qr-code-type.php:237
 msgid "No MeCard/vCard cards found"
 msgstr "Не найдено MeCard/vCard карт"
 
-#: controller/class-wqm-qr-code-type.php:161
+#: controller/class-wqm-qr-code-type.php:238
 msgid "No MeCard/vCard cards found in Trash"
 msgstr "В корзине MeCard/vCard карт не найдено"
 
-#: controller/class-wqm-qr-code-type.php:162
+#: controller/class-wqm-qr-code-type.php:239
 msgid "Parent MeCard/vCard card"
 msgstr "Родительская MeCard/vCard карта"
 
-#: controller/class-wqm-qr-code-type.php:195
+#: controller/class-wqm-qr-code-type.php:272
 msgid "QR code settings"
 msgstr "Настройки QR кода"
 
-#: controller/class-wqm-qr-code-type.php:203
+#: controller/class-wqm-qr-code-type.php:280
 msgid "Card fields"
 msgstr "Поля карты"
 
@@ -151,8 +186,9 @@ msgstr "Виджет QR code MeCard/vCard card"
 msgid "Photo"
 msgstr "Фото"
 
-#: views/card-fields-form.php:33 views/card-fields-form.php:392
-#: views/card-fields-form.php:402
+#: views/card-fields-form.php:33 views/card-fields-form.php:410
+#: views/card-fields-form.php:420 views/card-fields-form.php:425
+#: views/card-fields-form.php:431
 msgid "Select photo"
 msgstr "Выберите фото"
 
@@ -428,11 +464,11 @@ msgstr ""
 "в телефонной книге."
 
 #. Plugin Name of the plugin/theme
-#: views/requirements-error.php:5
+#: views/requirements-error.php:7
 msgid "QR code MeCard/vCard generator"
 msgstr "Генератор MeCard/vCard QR кода"
 
-#: views/requirements-error.php:5
+#: views/requirements-error.php:7
 msgid ""
 "error: Your environment doesn't meet all of the system requirements listed "
 "below."
@@ -440,7 +476,7 @@ msgstr ""
 "ошибка: Ваше программное окружение не соответствует системным требованиям "
 "описным ниже."
 
-#: views/requirements-error.php:15
+#: views/requirements-error.php:17
 msgid ""
 "If you need to upgrade your version of PHP you can ask your hosting company "
 "for assistance, and if you need help upgrading WordPress you can refer to the"
@@ -449,53 +485,78 @@ msgstr ""
 "хостингу, а если вам нужна помощь в обновлении WordPress, вы можете "
 "обратиться к"
 
-#: views/settings-form.php:30
+#: views/settings-form.php:35
 msgid "Type"
 msgstr "Тип карты"
 
-#: views/settings-form.php:36
+#: views/settings-form.php:41
 msgid "Select contact information QR code format"
 msgstr "Выберите формат контактной информации для QR кода"
 
-#: views/settings-form.php:37
+#: views/settings-form.php:42
 msgid "MeCard has encoding issues and support less fields"
 msgstr ""
 "Тип MeCard имеет проблемы с кодировкой полей и поддерживает малое их "
 "количество"
 
-#: views/settings-form.php:41
+#: views/settings-form.php:46
+msgid "QR appearance"
+msgstr "Внешний вид QR-кода"
+
+#: views/settings-form.php:64
+msgid ""
+"How dark modules are drawn (PNG export). Decorative styles need a high error "
+"correction level and testing with real scanners."
+msgstr ""
+"Внешний вид QR-кода. Как отображаются темные модули (экспорт PNG). Для "
+"декоративных стилей требуется высокий уровень коррекции ошибок и "
+"тестирование с реальными сканерами."
+
+#: views/settings-form.php:68
 msgid "Margin"
 msgstr "Окантовка"
 
-#: views/settings-form.php:45
+#: views/settings-form.php:72
 msgid "Specify border size around QR code in px"
 msgstr "Укажите размер рамки вокруг QR кода в пикселях"
 
-#: views/settings-form.php:50
+#: views/settings-form.php:76
+msgid "QR size"
+msgstr "Размеры QR"
+
+#: views/settings-form.php:96
+msgid ""
+"Choose how large the QR image should be — it is always square (width equals "
+"height). Size is set in pixels."
+msgstr ""
+"Выберите размер изображения QR-кода — он всегда квадратный (ширина равна "
+"высоте). Размер задается в пикселях."
+
+#: views/settings-form.php:101
 msgid "Correction level"
 msgstr "Уровень коррекции"
 
-#: views/settings-form.php:55
+#: views/settings-form.php:106
 #, php-format
 msgid "Level L – up to 7% damage"
-msgstr "Уровень L - до 7% повреждений"
+msgstr "Уровень H - до 30% повреждений"
 
-#: views/settings-form.php:58
+#: views/settings-form.php:109
 #, php-format
 msgid "Level M – up to 15% damage"
 msgstr "Уровень M - до 15% повреждений"
 
-#: views/settings-form.php:61
+#: views/settings-form.php:112
 #, php-format
 msgid "Level Q – up to 25% damage"
 msgstr "Уровень Q - до 25% повреждений"
 
-#: views/settings-form.php:64
+#: views/settings-form.php:115
 #, php-format
 msgid "Level H – up to 30% damage"
 msgstr "Уровень H - до 30% повреждений"
 
-#: views/settings-form.php:67
+#: views/settings-form.php:118
 msgid ""
 "There are different amounts of “backup” data depending on how much damage "
 "the QR code is expected to suffer in its intended environment."
@@ -503,73 +564,74 @@ msgstr ""
 "Существуют разные объемы «резервных» данных, в зависимости от того, какой "
 "ущерб должен нанести QR-код в предполагаемой среде."
 
-#: views/settings-form.php:71
+#: views/settings-form.php:122
 msgid "Label"
 msgstr "Метка"
 
-#: views/settings-form.php:75
+#: views/settings-form.php:126
 msgid "Optional text label below QR code."
 msgstr "Опциональная метка которая будет выводиться под QR кодом."
 
-#: views/settings-form.php:79
+#: views/settings-form.php:130
 msgid "Logo"
 msgstr "Логотип"
 
-#: views/settings-form.php:85 views/settings-form.php:157
-#: views/settings-form.php:167
+#: views/settings-form.php:136 views/settings-form.php:220
+#: views/settings-form.php:230 views/settings-form.php:235
+#: views/settings-form.php:241
 msgid "Select logo image"
 msgstr "Выберите логотип"
 
-#: views/settings-form.php:88
+#: views/settings-form.php:139
 msgid "Delete logo image"
 msgstr "Удалить логотип"
 
-#: views/settings-form.php:89
+#: views/settings-form.php:140
 msgid "Optional logo image at center of QR code."
 msgstr "Логотип, по центру QR кода, опционально."
 
-#: views/settings-form.php:93
+#: views/settings-form.php:144
 msgid "Logo size"
 msgstr "Размеры логотипа"
 
-#: views/settings-form.php:97
+#: views/settings-form.php:148
 msgid "width"
 msgstr "ширина"
 
-#: views/settings-form.php:100
+#: views/settings-form.php:151
 msgid "height"
 msgstr "высота"
 
-#: views/settings-form.php:103
+#: views/settings-form.php:154
 msgid "Set logo image size in pixels or percents."
 msgstr "Укажите размеры логотипа, можно в пикселях и процентах."
 
-#: views/settings-form.php:107
+#: views/settings-form.php:158
 msgid "Background color"
 msgstr "Цвет фона"
 
-#: views/settings-form.php:112
+#: views/settings-form.php:163
 msgid "Set qrcode background color in RGBA format."
 msgstr "Укажите желаемый цвет фона qr-code в RGBA формате"
 
-#: views/settings-form.php:116
+#: views/settings-form.php:167
 msgid "Text & code color"
 msgstr "Цвет текста и самого qr-code"
 
-#: views/settings-form.php:121
+#: views/settings-form.php:172
 msgid "Set qrcode background color in RGB format."
 msgstr "Укажите желаемый цвет qr-code и текста в формате RGB."
 
-#: views/settings-form.php:127
+#: views/settings-form.php:178
 msgid "Please! Make sure that you colored qr-code can be read by scanner!!"
 msgstr ""
 "Внимание! Убедитесь что qr-code с выбранными цветами читается сканером!!"
 
-#: views/settings-form.php:131
+#: views/settings-form.php:182
 msgid "File name"
 msgstr "Имя файла"
 
-#: views/settings-form.php:134
+#: views/settings-form.php:185
 msgid ""
 "File name when enable save/open v-card as file in widget. Enabled patterns: "
 msgstr ""
@@ -624,6 +686,25 @@ msgstr "Станислав Кузнецов"
 #. Author URI of the plugin/theme
 msgid "https://www.linkedin.com/in/stasionok/"
 msgstr "https://www.linkedin.com/in/stasionok/"
+
+#~ msgid ""
+#~ "Pick final image size (width = height). Use filter wqm_qr_size_presets to "
+#~ "add custom sizes."
+#~ msgstr ""
+#~ "Выберите окончательный размер изображения (ширина = высота). Используйте "
+#~ "фильтр wqm_qr_size_presets, чтобы добавить пользовательские размеры."
+
+#~ msgid "QR code"
+#~ msgstr "QR код"
+
+#~ msgid "Direct url"
+#~ msgstr "Прямая ссылка"
+
+#~ msgid "Create permanent url"
+#~ msgstr "Создать постоянную ссылку"
+
+#~ msgid "Direct .VCF Link"
+#~ msgstr "Прямая ссылка на .VCF файл"
 
 #~ msgid "Your server is running PHP version "
 #~ msgstr "Ваш сервер работает на PHP версии "

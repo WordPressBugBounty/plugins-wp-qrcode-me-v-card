@@ -106,10 +106,18 @@ if ( ! class_exists( 'WQM_Common' ) ) {
 		public function wqm_register_admin_scripts() {
 			wp_enqueue_style( 'wqm-styles', $this->plugin_base_url . 'static/css/styles.css' );
             wp_enqueue_media();
-			if ( ! wp_script_is( 'select2', 'registered' ) ) {
-				wp_enqueue_style( 'select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', false, '1.0', 'all' );
-				wp_enqueue_script( 'select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array( 'jquery' ), '1.0', true );
+			// Handle `wqm-select2`: avoid collision with WooCommerce’s registered `select2` that is often not enqueued here.
+			$wqm_select2_ver = '4.0.13';
+			$wqm_select2_base = $this->plugin_base_url . 'static/vendor/select2';
+
+			if ( ! wp_style_is( 'wqm-select2', 'registered' ) ) {
+				wp_register_style( 'wqm-select2', $wqm_select2_base . '/css/select2.min.css', array(), $wqm_select2_ver );
 			}
+			if ( ! wp_script_is( 'wqm-select2', 'registered' ) ) {
+				wp_register_script( 'wqm-select2', $wqm_select2_base . '/js/select2.min.js', array( 'jquery' ), $wqm_select2_ver, true );
+			}
+			wp_enqueue_style( 'wqm-select2' );
+			wp_enqueue_script( 'wqm-select2' );
 
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_register_script( 'wqm-color-picker-alpha', $this->plugin_base_url . 'static/js/wp-color-picker-alpha.min.js', array( 'wp-color-picker' ), '3.0.2', true );

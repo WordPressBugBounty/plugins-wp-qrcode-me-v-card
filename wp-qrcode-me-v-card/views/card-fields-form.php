@@ -379,6 +379,12 @@ if ( ! empty( $wqm_photo ) ) {
     </tbody>
 </table>
 <script>
+    function wqmTelSelect2() {
+        if (typeof jQuery.fn.select2 !== 'function') {
+            return;
+        }
+        jQuery('#tel-wrapper select.wqm-tel').select2();
+    }
     jQuery(document).ready(function () {
         jQuery('#wqm_photo_path_delete').click(function () {
             jQuery('#field-photo').val('');
@@ -447,7 +453,7 @@ if ( ! empty( $wqm_photo ) ) {
             return false;
         }); // End on click
 
-        jQuery('#tel-wrapper select.wqm-tel').select2();
+        wqmTelSelect2();
 
         jQuery('#tel-add').click(function (e) {
             var len = jQuery(this).data('len');
@@ -468,7 +474,7 @@ if ( ! empty( $wqm_photo ) ) {
             templ.find('.tel-collapse-btn').attr('data-id', len);
 
             jQuery('#tel-wrapper').append(templ);
-            jQuery('#tel-wrapper select.wqm-tel').select2();
+            wqmTelSelect2();
         });
 
         jQuery('#mail-add').click(function (e) {
@@ -547,7 +553,7 @@ if ( ! empty( $wqm_photo ) ) {
         }).on('click', '.tel-expand-btn', function () {
             var id = jQuery(this).data('id');
             jQuery('.tel-elements-' + id).removeClass('tel-no-type');
-            jQuery('#tel-wrapper select.wqm-tel').select2();
+            wqmTelSelect2();
         }).on('click', '.tel-collapse-btn', function () {
             var id = jQuery(this).data('id');
             jQuery('.tel-elements-' + id).addClass('tel-no-type');

@@ -6,7 +6,7 @@
  * Author URI:      https://www.linkedin.com/in/stasionok/
  * Author Telegram: https://t.me/stasionok
  * Author:          Stanislav Kuznetsov
- * Version:     1.7.1
+ * Version:     1.8.0
  * License:         GPLv2 or later
  * Text Domain:     wp-qrcode-me-v-card
  * Domain Path:     /languages

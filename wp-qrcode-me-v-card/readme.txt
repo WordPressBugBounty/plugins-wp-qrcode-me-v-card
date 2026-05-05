@@ -5,7 +5,7 @@ Donate link: Ethereum 0x1b7722bd9899fD10D145D773F5373460E11f97A6
 Tags: mecard, vcard, qrcode, shortcode, widget
 Requires at least: 5.0
 Tested up to: 6.8.3
-Stable tag: 1.7.1
+Stable tag: 1.8.0
 Requires PHP: 7.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -180,3 +180,7 @@ Add qrcode for .vcf file
 
 = 1.7.1 - 2025-01-28 =
 Add qrcode size selector with hook for custom sizes
+
+= 1.8.0 - 2026-05-05 =
+Fix js error in admin page
+Add qrcode visual types (QR appearance) selector on edit qrcode page

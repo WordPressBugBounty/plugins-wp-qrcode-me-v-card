@@ -5,6 +5,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+require_once __DIR__ . '/class-wqm-styled-png-writer.php';
+
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\LabelAlignment;
 use Endroid\QrCode\QrCode;
@@ -212,7 +214,37 @@ CARD;
 			}
 			if ( ! empty( $this->params['wqm_fgcolor'] ) ) {
 				$colors = str_replace( '#', '', $this->params['wqm_fgcolor'] );
-				$qr_code->setForegroundColor( [ 'r' => hexdec( substr( $colors, 0, 2 ) ), 'g' => hexdec( substr( $colors, 2, 2 ) ), 'b' => hexdec( substr( $colors, 2, 2 ) ) ] );
+				$qr_code->setForegroundColor(
+					array(
+						'r' => hexdec( substr( $colors, 0, 2 ) ),
+						'g' => hexdec( substr( $colors, 2, 2 ) ),
+						'b' => hexdec( substr( $colors, 4, 2 ) ),
+					)
+				);
+			}
+
+			$visual = isset( $this->params['wqm_visual_style'] ) ? sanitize_key( strval( $this->params['wqm_visual_style'] ) ) : 'square';
+			if ( '' === $visual ) {
+				$visual = 'square';
+			}
+			$style_opts = WQM_QR_Code_Type::get_visual_style_options();
+			if ( ! isset( $style_opts[ $visual ] ) ) {
+				$visual = 'square';
+			}
+			if ( WQM_Styled_Png_Writer::slug_is_styled( $visual ) && 'png' === strtolower( strval( $this->params['wqm_img_type'] ) ) ) {
+				try {
+					$qr_code->setWriter( new WQM_Styled_Png_Writer( $visual ) );
+				} catch ( Throwable $e ) {
+					do_action(
+						'wqm_visual_style_fallback',
+						array(
+							'style'     => $visual,
+							'exception' => $e,
+							'type'      => get_class( $e ),
+							'message'   => $e->getMessage(),
+						)
+					);
+				}
 			}
 		}
 
